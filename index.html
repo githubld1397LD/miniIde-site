@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MiniIDE Python</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body, h1, h2, h3, h4, p, a, ul, li { margin: 0; padding: 0; }
+    body { font-family: 'Roboto', sans-serif; background-color: #f5f5f5; color: #333; line-height: 1.6; }
+
+    header { background: linear-gradient(135deg, #4CAF50, #2E7D32); color: white; text-align: center; padding: 80px 20px; }
+    header nav h1 { font-size: 2.5rem; margin-bottom: 20px; }
+    .hero h2 { font-size: 2rem; margin-bottom: 15px; }
+    .hero p { font-size: 1.2rem; margin-bottom: 30px; max-width: 600px; margin-left: auto; margin-right: auto; }
+    .btn-download { display: inline-block; background: #FFD700; color: #333; padding: 15px 35px; font-size: 18px; border-radius: 50px; text-decoration: none; font-weight: bold; transition: background 0.3s; }
+    .btn-download:hover { background: #FFC107; }
+
+    .features { padding: 60px 20px; text-align: center; }
+    .features h3 { font-size: 2rem; margin-bottom: 40px; color: #2E7D32; }
+    .cards { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; }
+    .card { background: white; padding: 25px; border-radius: 12px; width: 260px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); transition: transform 0.3s; }
+    .card:hover { transform: translateY(-5px); }
+    .card h4 { margin-bottom: 15px; color: #4CAF50; }
+    .card p { font-size: 1rem; }
+
+    .download-section {
+      background: #f0f9ff;
+      border: 1px solid #b6e0fe;
+      border-radius: 12px;
+      padding: 25px 20px;
+      max-width: 750px;
+      margin: 40px auto;
+      box-shadow: 0 5px 10px rgba(0,0,0,0.05);
+      text-align: center;
+    }
+    .download-section h3 { color: #0077cc; font-size: 1.5rem; margin-bottom: 15px; }
+    .download-section p { margin-bottom: 20px; }
+    .download-section a { margin: 10px; }
+
+    .macos-help {
+      background: #f0f9ff;
+      border: 1px solid #b6e0fe;
+      border-radius: 12px;
+      padding: 25px 20px;
+      max-width: 750px;
+      margin: 60px auto;
+      box-shadow: 0 5px 10px rgba(0,0,0,0.05);
+      text-align: left;
+    }
+    .macos-help h3 { color: #0077cc; font-size: 1.5rem; margin-bottom: 10px; }
+    .macos-help ul { list-style: none; padding-left: 0; margin: 15px 0; }
+    .macos-help li { background: white; border-left: 4px solid #0077cc; padding: 10px 15px; margin-bottom: 10px; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+    .macos-help .note { font-size: 0.9rem; color: #555; margin-top: 10px; font-style: italic; }
+
+    footer { text-align: center; padding: 25px; font-size: 0.9rem; background: #e0e0e0; margin-top: 50px; color: #555; }
+
+    @media(max-width: 768px){
+      .cards { flex-direction: column; align-items: center; }
+      .hero h2 { font-size: 1.6rem; }
+      .hero p { font-size: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <nav>
+      <h1>MiniIDE Python</h1>
+    </nav>
+    <div class="hero">
+      <h2>L’IDE Python simple, rapide et gratuit</h2>
+      <p>Écrivez et exécutez vos scripts Python directement sur macOS.</p>
+      <a class="btn-download" href="MiniIDE.zip" download>Télécharger MiniIDE Gratuitement</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="features">
+      <h3>Fonctionnalités</h3>
+      <div class="cards">
+        <div class="card">
+          <h4>Éditeur Intuitif</h4>
+          <p>Interface simple pour écrire et exécuter vos scripts Python rapidement.</p>
+        </div>
+        <div class="card">
+          <h4>Pyodide intégré</h4>
+          <p>Exécution du code Python directement dans le navigateur intégré à l'IDE.</p>
+        </div>
+        <div class="card">
+          <h4>Gratuit & Léger</h4>
+          <p>Téléchargez votre IDE sans installation complexe et sans frais pour mac.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section MacOS Help -->
+    <section class="macos-help">
+      <h3>🚀 Comment ouvrir MiniIDE sur macOS</h3>
+      <p>Si macOS bloque l’ouverture de l’application, suivez simplement ces étapes :</p>
+      <ul>
+        <li>🔒 Ouvrez <strong>Préférences Système → Sécurité et confidentialité → Sécurité</strong></li>
+        <li>✅ Cliquez sur <strong>“Ouvrir quand même”</strong> pour lancer MiniIDE</li>
+      </ul>
+      <p class="note">Cette étape n’est nécessaire qu’une seule fois.</p>
+    </section>
+
+    <!-- Section avec 1 téléchargement -->
+    <section class="download-section">
+      <h3>📦 Téléchargement unique</h3>
+      <p>Vous pouvez télécharger votre outil de gestion de planning pour macos ici :</p>
+      <a class="btn-download" href="management.zip" download>Planning</a>
+    </section>
+
+    <!-- Section avec 3 téléchargements -->
+    <section class="download-section">
+      <h3>🛠 Autres outils</h3>
+      <p>Téléchargez ces trois fichiers complémentaires et connectez-vous à votre base de données Oracle !</p>
+      <a class="btn-download" href="Oracle-data-tool-macos-arm64.zip" download>Oracle data tool macos</a>
+      <a class="btn-download" href="Oracle-data-tool-win-x64.exe.zip" download>Oracle data tool windows</a>
+      <a class="btn-download" href="Oracle-data-tool-linux-x64.zip" download>Oracle data tool linux</a>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>© 2025 Louis DUFOUR. IDE Python gratuit.</p>
+  </footer>
+
+</body>
+</html>
