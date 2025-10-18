@@ -1,131 +1,165 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MiniIDE Python</title>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-  <style>
-    body, h1, h2, h3, h4, p, a, ul, li { margin: 0; padding: 0; }
-    body { font-family: 'Roboto', sans-serif; background-color: #f5f5f5; color: #333; line-height: 1.6; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mes Outils Python</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+<style>
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+  background:#f5f5f5;
+  color:#333;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+main { flex: 1; width: 100%; display:flex; flex-direction:column; align-items:center; }
 
-    header { background: linear-gradient(135deg, #4CAF50, #2E7D32); color: white; text-align: center; padding: 80px 20px; }
-    header nav h1 { font-size: 2.5rem; margin-bottom: 20px; }
-    .hero h2 { font-size: 2rem; margin-bottom: 15px; }
-    .hero p { font-size: 1.2rem; margin-bottom: 30px; max-width: 600px; margin-left: auto; margin-right: auto; }
-    .btn-download { display: inline-block; background: #FFD700; color: #333; padding: 15px 35px; font-size: 18px; border-radius: 50px; text-decoration: none; font-weight: bold; transition: background 0.3s; }
-    .btn-download:hover { background: #FFC107; }
+header { background: linear-gradient(135deg, #4CAF50, #2E7D32); color:white; text-align:center; padding:30px 20px; width:100%; }
+header h1 { margin-bottom:15px; }
+nav { margin-top:10px; text-align:center; }
+nav button { margin:5px; padding:10px 25px; border:none; border-radius:8px; cursor:pointer; background:#FFD700; font-weight:bold; }
+nav button.active { background:#FFC107; }
 
-    .features { padding: 60px 20px; text-align: center; }
-    .features h3 { font-size: 2rem; margin-bottom: 40px; color: #2E7D32; }
-    .cards { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; }
-    .card { background: white; padding: 25px; border-radius: 12px; width: 260px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); transition: transform 0.3s; }
-    .card:hover { transform: translateY(-5px); }
-    .card h4 { margin-bottom: 15px; color: #4CAF50; }
-    .card p { font-size: 1rem; }
+section {
+  display:none;
+  padding:40px 20px;
+  max-width:900px;
+  margin:20px auto;
+  background:white;
+  border-radius:12px;
+  box-shadow:0 5px 15px rgba(0,0,0,0.1);
+  text-align:center;
+}
+section h2 { color:#2E7D32; margin-bottom:15px; }
+a.btn-download { display:inline-block; padding:12px 25px; background:#FFD700; color:#333; text-decoration:none; border-radius:50px; margin:10px 5px; }
+a.btn-download:hover { background:#FFC107; }
 
-    .download-section {
-      background: #f0f9ff;
-      border: 1px solid #b6e0fe;
-      border-radius: 12px;
-      padding: 25px 20px;
-      max-width: 750px;
-      margin: 40px auto;
-      box-shadow: 0 5px 10px rgba(0,0,0,0.05);
-      text-align: center;
-    }
-    .download-section h3 { color: #0077cc; font-size: 1.5rem; margin-bottom: 15px; }
-    .download-section p { margin-bottom: 20px; }
-    .download-section a { margin: 10px; }
+.macos-help { background:#f0f9ff; border:1px solid #b6e0fe; border-radius:12px; padding:25px 20px; margin-top:20px; text-align:center; }
+.macos-help ul { list-style:none; padding-left:0; display:inline-block; text-align:left; }
+.macos-help li { background:white; border-left:4px solid #0077cc; padding:10px 15px; margin-bottom:10px; border-radius:8px; }
 
-    .macos-help {
-      background: #f0f9ff;
-      border: 1px solid #b6e0fe;
-      border-radius: 12px;
-      padding: 25px 20px;
-      max-width: 750px;
-      margin: 60px auto;
-      box-shadow: 0 5px 10px rgba(0,0,0,0.05);
-      text-align: left;
-    }
-    .macos-help h3 { color: #0077cc; font-size: 1.5rem; margin-bottom: 10px; }
-    .macos-help ul { list-style: none; padding-left: 0; margin: 15px 0; }
-    .macos-help li { background: white; border-left: 4px solid #0077cc; padding: 10px 15px; margin-bottom: 10px; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
-    .macos-help .note { font-size: 0.9rem; color: #555; margin-top: 10px; font-style: italic; }
+.feature-list { display:flex; flex-wrap: wrap; gap:15px; margin-top:20px; justify-content:center; }
+.feature-list li {
+  background: #fff176;
+  padding:15px;
+  width:200px;
+  min-height:80px;
+  border-radius:10px;
+  box-shadow: 2px 2px 6px rgba(0,0,0,0.2);
+  transform: rotate(-2deg);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  font-weight:bold;
+  list-style:none;
+  transition: transform 0.2s;
+}
+.feature-list li:nth-child(2) { background:#ffeb3b; transform: rotate(1deg); }
+.feature-list li:nth-child(3) { background:#fff59d; transform: rotate(-1deg); }
+.feature-list li:nth-child(4) { background:#fff176; transform: rotate(2deg); }
+.feature-list li:hover { transform: scale(1.05); }
 
-    footer { text-align: center; padding: 25px; font-size: 0.9rem; background: #e0e0e0; margin-top: 50px; color: #555; }
+footer { text-align:center; padding:25px; background:#e0e0e0; width:100%; }
 
-    @media(max-width: 768px){
-      .cards { flex-direction: column; align-items: center; }
-      .hero h2 { font-size: 1.6rem; }
-      .hero p { font-size: 1rem; }
-    }
-  </style>
+@media(max-width:768px){
+  nav { display:flex; flex-wrap:wrap; justify-content:center; }
+  .feature-list { flex-direction: column; align-items:center; }
+  .feature-list li { width:80%; }
+}
+</style>
 </head>
 <body>
 
-  <header>
-    <nav>
-      <h1>MiniIDE Python</h1>
-    </nav>
-    <div class="hero">
-      <h2>L’IDE Python simple, rapide et gratuit</h2>
-      <p>Écrivez et exécutez vos scripts Python directement sur macOS.</p>
-      <a class="btn-download" href="https://www.dropbox.com/scl/fi/kwqcwtu599ekre9p3uth1/MiniIDE.zip?rlkey=0yc8b46bbi7vd158ibcifacte&st=ylzbr08o&dl=1" download>Télécharger MiniIDE Gratuitement</a>
-    </div>
-  </header>
+<header>
+  <h1>Mes Outils logiciels gratuits</h1>
+  <nav>
+    <button class="tab-btn active" data-target="miniide">MiniIDE</button>
+    <button class="tab-btn" data-target="planning">Planning</button>
+    <button class="tab-btn" data-target="oracle">Oracle Tools</button>
+  </nav>
+</header>
 
-  <main>
-    <section class="features">
-      <h3>Fonctionnalités</h3>
-      <div class="cards">
-        <div class="card">
-          <h4>Éditeur Intuitif</h4>
-          <p>Interface simple pour écrire et exécuter vos scripts Python rapidement.</p>
-        </div>
-        <div class="card">
-          <h4>Pyodide intégré</h4>
-          <p>Exécution du code Python directement dans le navigateur intégré à l'IDE.</p>
-        </div>
-        <div class="card">
-          <h4>Gratuit & Léger</h4>
-          <p>Téléchargez votre IDE sans installation complexe et sans frais pour mac.</p>
-        </div>
-      </div>
-    </section>
+<main>
+  <!-- Onglet MiniIDE -->
+  <section id="miniide" style="display:block;">
+    <h2>MiniIDE Python</h2>
+    <p>Téléchargez MiniIDE pour macOS :</p>
+    <a class="btn-download" href="https://www.dropbox.com/scl/fi/kwqcwtu599ekre9p3uth1/MiniIDE.zip?rlkey=0yc8b46bbi7vd158ibcifacte&st=qpuuit8e&dl=1" download>Télécharger MiniIDE Gratuitement</a>
 
-    <!-- Section MacOS Help -->
-    <section class="macos-help">
+    <div class="macos-help">
       <h3>🚀 Comment ouvrir MiniIDE sur macOS</h3>
-      <p>Si macOS bloque l’ouverture de l’application, suivez simplement ces étapes :</p>
       <ul>
         <li>🔒 Ouvrez <strong>Préférences Système → Sécurité et confidentialité → Sécurité</strong></li>
-        <li>✅ Cliquez sur <strong>“Ouvrir quand même”</strong> pour lancer MiniIDE</li>
+        <li>✅ Cliquez sur <strong>“Ouvrir quand même”</strong></li>
       </ul>
-      <p class="note">Cette étape n’est nécessaire qu’une seule fois.</p>
-    </section>
+      <p>Cette étape n’est nécessaire qu’une seule fois.</p>
+    </div>
 
-    <!-- Section avec 1 téléchargement -->
-    <section class="download-section">
-      <h3>📦 Téléchargement unique</h3>
-      <p>Vous pouvez télécharger votre outil de gestion de planning pour macos ici :</p>
-      <a class="btn-download" href="management.zip" download>Planning</a>
-    </section>
+    <h3>Fonctionnalités de MiniIDE</h3>
+    <ul class="feature-list">
+      <li>💻 Éditeur intuitif avec coloration syntaxique</li>
+      <li>⚡ Exécution rapide des scripts Python</li>
+      <li>📦 Gestion facile des fichiers et projets locaux</li>
+      <li>🔍 Console intégrée pour visualiser erreurs et résultats</li>
+    </ul>
+  </section>
 
-    <!-- Section avec 3 téléchargements -->
-    <section class="download-section">
-      <h3>🛠 Autres outils</h3>
-      <p>Téléchargez ces trois fichiers complémentaires et connectez-vous à votre base de données Oracle !</p>
-      <a class="btn-download" href="https://www.dropbox.com/scl/fi/n7elehyr3o2zlvirgf2te/oracle-data-tool-macos-arm64.zip?rlkey=kejpmng45aa5s928fdx2p1pfe&st=ass7nocz&dl=1" download>Oracle data tool macos</a>
-      <a class="btn-download" href="https://www.dropbox.com/scl/fi/v87edxtw0e32wxkpvqgf7/oracle-data-tool-win-x64.exe.zip?rlkey=6gia1layl28u70zubatas6zel&st=ah7fdkwl&dl=1" download>Oracle data tool windows</a>
-      <a class="btn-download" href="https://www.dropbox.com/scl/fi/ukxdp89hzinzw27jrj5lb/oracle-data-tool-linux-x64.zip?rlkey=y9vkme9f4oij7esdcmbd5srr8&st=l1yrqo6q&dl=1" download>Oracle data tool linux</a>
-    </section>
+  <!-- Onglet Planning -->
+  <section id="planning">
+    <h2>Planning Tool</h2>
+    <p>Téléchargez l’outil de planning pour macOS :</p>
+    <a class="btn-download" href="management.zip" download>Télécharger Planning</a>
 
-  </main>
+    <h3>Fonctionnalités du Planning Tool</h3>
+    <ul class="feature-list">
+      <li>📅 Création et gestion facile des plannings</li>
+      <li>🖥️ Interface claire pour organiser les tâches</li>
+      <li>🔔 Alertes et rappels automatiques</li>
+      <li>💾 Export et sauvegarde automatique des données</li>
+    </ul>
+  </section>
 
-  <footer>
-    <p>© 2025 Louis DUFOUR. IDE Python gratuit.</p>
-  </footer>
+  <!-- Onglet Oracle Tools -->
+  <section id="oracle">
+    <h2>Oracle Data Tools</h2>
+    <p>Téléchargez un des 3 fichiers et connectez-vous à votre base de données Oracle :</p>
+    <a class="btn-download" href="https://www.dropbox.com/scl/fi/n7elehyr3o2zlvirgf2te/oracle-data-tool-macos-arm64.zip?rlkey=kejpmng45aa5s928fdx2p1pfe&st=uiyrs91d&dl=1" download>Oracle macOS</a>
+    <a class="btn-download" href="https://www.dropbox.com/scl/fi/v87edxtw0e32wxkpvqgf7/ oracle-data-tool-win-x64.exe.zip?rlkey=6gia1layl28u70zubatas6zel&st=5f35ophz&dl=1" download>Oracle Windows</a>
+    <a class="btn-download" href="https://www.dropbox.com/scl/fi/ukxdp89hzinzw27jrj5lb/oracle-data-tool-linux-x64.zip?rlkey=y9vkme9f4oij7esdcmbd5srr8&st=fcmgzv4s&dl=1" download>Oracle Linux</a>
+
+    <h3>Fonctionnalités Oracle Data Tools</h3>
+    <ul class="feature-list">
+      <li>🗄️ Connexion sécurisée aux bases Oracle</li>
+      <li>📊 Export et import rapide des données</li>
+      <li>⚡ Optimisation des requêtes et gestion avancée</li>
+      <li>🔒 Sécurité renforcée et gestion des utilisateurs</li>
+    </ul>
+  </section>
+</main>
+
+<script>
+const buttons = document.querySelectorAll('.tab-btn');
+const sections = document.querySelectorAll('section');
+
+buttons.forEach(btn => {
+  btn.addEventListener('click', () => {
+    sections.forEach(sec => sec.style.display='none');
+    buttons.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(btn.dataset.target).style.display='block';
+  });
+});
+</script>
+
+<footer>
+  <p>© 2025 Louis DUFOUR. IDE Python, outils Oracle et planning gratuits.</p>
+</footer>
 
 </body>
 </html>
+
