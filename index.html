@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mes Outils Logiciels</title>
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/pyodide/v0.23.4/full/pyodide.js"></script>
 <style>
 html, body {
   height: 100%;
@@ -71,6 +72,45 @@ footer { text-align:center; padding:25px; background:#e0e0e0; width:100%; }
   .feature-list { flex-direction: column; align-items:center; }
   .feature-list li { width:80%; }
 }
+
+/* === IDE Web === */
+.ide-container {
+  background:#1e1e1e;
+  color:#eee;
+  border-radius:12px;
+  padding:20px;
+  text-align:left;
+}
+.ide-container select, .ide-container button {
+  margin:5px;
+  padding:10px;
+  border:none;
+  border-radius:6px;
+  font-weight:bold;
+}
+.ide-container select { background:#333; color:white; }
+.ide-container button { background:#4CAF50; color:white; cursor:pointer; }
+.ide-container button:hover { background:#45a049; }
+textarea {
+  width:100%;
+  height:200px;
+  border:none;
+  border-radius:8px;
+  padding:10px;
+  font-family:monospace;
+  font-size:15px;
+  background:#252526;
+  color:white;
+}
+pre {
+  background:#111;
+  color:#9ef;
+  padding:10px;
+  border-radius:8px;
+  min-height:100px;
+  overflow:auto;
+}
+iframe { width:100%; height:250px; border-radius:8px; border:none; background:white; }
 </style>
 </head>
 <body>
@@ -81,6 +121,7 @@ footer { text-align:center; padding:25px; background:#e0e0e0; width:100%; }
     <button class="tab-btn active" data-target="miniide">MiniIDE</button>
     <button class="tab-btn" data-target="planning">Planning</button>
     <button class="tab-btn" data-target="oracle">Oracle Tools</button>
+    <button class="tab-btn" data-target="ideweb">IDE en ligne</button>
   </nav>
 </header>
 
@@ -128,9 +169,9 @@ footer { text-align:center; padding:25px; background:#e0e0e0; width:100%; }
   <section id="oracle">
     <h2>Oracle Data Tools</h2>
     <p>Téléchargez un des 3 fichiers et connectez-vous à votre base de données Oracle :</p>
-    <a class="btn-download" href="https://www.dropbox.com/scl/fi/n7elehyr3o2zlvirgf2te/oracle-data-tool-macos-arm64.zip?rlkey=kejpmng45aa5s928fdx2p1pfe&st=uiyrs91d&dl=1" download>Oracle macOS</a>
-    <a class="btn-download" href="https://www.dropbox.com/scl/fi/v87edxtw0e32wxkpvqgf7/ oracle-data-tool-win-x64.exe.zip?rlkey=6gia1layl28u70zubatas6zel&st=5f35ophz&dl=1" download>Oracle Windows</a>
-    <a class="btn-download" href="https://www.dropbox.com/scl/fi/ukxdp89hzinzw27jrj5lb/oracle-data-tool-linux-x64.zip?rlkey=y9vkme9f4oij7esdcmbd5srr8&st=fcmgzv4s&dl=1" download>Oracle Linux</a>
+    <a class="btn-download" href="#" download>Oracle macOS</a>
+    <a class="btn-download" href="#" download>Oracle Windows</a>
+    <a class="btn-download" href="#" download>Oracle Linux</a>
 
     <h3>Fonctionnalités Oracle Data Tools</h3>
     <ul class="feature-list">
@@ -140,12 +181,31 @@ footer { text-align:center; padding:25px; background:#e0e0e0; width:100%; }
       <li>🔒 Sécurité renforcée et gestion des utilisateurs</li>
     </ul>
   </section>
+
+  <!-- 🧠 Nouvel Onglet IDE Web -->
+  <section id="ideweb">
+    <h2>💡 IDE en ligne multilangage</h2>
+    <p>Écrivez et exécutez du code directement dans votre navigateur !</p>
+    <div class="ide-container">
+      <select id="lang">
+        <option value="python">Python</option>
+        <option value="javascript">JavaScript</option>
+        <option value="html">HTML</option>
+      </select>
+      <button id="run">▶ Exécuter</button>
+      <button id="save">💾 Télécharger</button>
+      <textarea id="editor" placeholder="Écrivez votre code ici..."></textarea>
+      <h3>Résultat :</h3>
+      <pre id="output">⏳ En attente d'exécution...</pre>
+      <iframe id="preview" style="display:none;"></iframe>
+    </div>
+  </section>
 </main>
 
 <script>
+// --- Navigation des onglets ---
 const buttons = document.querySelectorAll('.tab-btn');
 const sections = document.querySelectorAll('section');
-
 buttons.forEach(btn => {
   btn.addEventListener('click', () => {
     sections.forEach(sec => sec.style.display='none');
@@ -154,7 +214,72 @@ buttons.forEach(btn => {
     document.getElementById(btn.dataset.target).style.display='block';
   });
 });
+
+// --- IDE Web ---
+let pyodideReady = loadPyodide();
+
+const output = document.getElementById("output");
+const preview = document.getElementById("preview");
+const editor = document.getElementById("editor");
+
+document.getElementById("run").addEventListener("click", async () => {
+  const lang = document.getElementById("lang").value;
+  const code = editor.value;
+  output.style.display = "block";
+  preview.style.display = "none";
+  output.textContent = "⏳ Exécution...\n";
+
+  try {
+    if (lang === "javascript") {
+      // Rediriger console.log vers la sortie
+      let logs = [];
+      const oldLog = console.log;
+      console.log = (...args) => { logs.push(args.join(" ")); oldLog(...args); };
+
+      let result = eval(code);
+      console.log = oldLog;
+
+      if (logs.length > 0) {
+        output.textContent = logs.join("\n");
+      } else if (result !== undefined) {
+        output.textContent = String(result);
+      } else {
+        output.textContent = "✅ Code exécuté sans sortie.";
+      }
+
+    } else if (lang === "python") {
+      const pyodide = await pyodideReady;
+
+      // Capture print() en redirigeant sys.stdout
+      await pyodide.runPythonAsync(`
+import io, sys
+sys.stdout = io.StringIO()
+`);
+      await pyodide.runPythonAsync(code);
+      const result = await pyodide.runPythonAsync("sys.stdout.getvalue()");
+      output.textContent = result.trim() || "✅ Code exécuté sans sortie.";
+
+    } else if (lang === "html") {
+      preview.style.display = "block";
+      preview.srcdoc = code;
+      output.style.display = "none";
+    }
+  } catch (err) {
+    output.textContent = "❌ Erreur : " + err;
+  }
+});
+
+document.getElementById("save").addEventListener("click", () => {
+  const code = editor.value;
+  const lang = document.getElementById("lang").value;
+  const blob = new Blob([code], { type: "text/plain" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = `mon_code.${lang === "python" ? "py" : lang === "javascript" ? "js" : "html"}`;
+  a.click();
+});
 </script>
+
 
 <footer>
   <p>© 2025 Louis DUFOUR. IDE Python, outils Oracle et planning gratuits.</p>
@@ -162,4 +287,5 @@ buttons.forEach(btn => {
 
 </body>
 </html>
+
 
